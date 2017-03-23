@@ -5,5 +5,8 @@
 # Project:  TAKR project 2
 
 import sys
+from my_lib import param_parser
+
 if __name__ == "__main__":
-    sys.stderr.write("Empty file")
+    sys.stderr.write("---")
+    param = param_parser.ParseParams()
