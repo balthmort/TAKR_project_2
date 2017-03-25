@@ -66,6 +66,7 @@ class ParseParams(object):
                 help="Key file for encryption.\
                 One of key file or shift key must be set.",
                 default="shift.key",
+                dest="key_file",
                 required=False)
 
         key_shift_key.add_argument(
@@ -73,7 +74,6 @@ class ParseParams(object):
                 help="Shift key for encryption.\
                 If not specified, shift key will be randomly generated.\
                 One of key file or shift key must be set.",
-                dest="key",
                 default=None,
                 required=False)
         # }}}
@@ -87,6 +87,7 @@ class ParseParams(object):
                 "-k", "--key",
                 help="Output key file. Default: shift_output.key",
                 required=False,
+                dest="key_file",
                 default="shift_output.key")
         # }}}
 
@@ -102,13 +103,13 @@ class ParseParams(object):
                 help="Key file for encryption.\
                 One of key file or shift key must be set.",
                 default="shift.key",
+                dest="key_file",
                 required=False)
 
         key_shift.add_argument(
                 "-s", "--shift_key",
                 help="Shift key for encryption.\
                 One of key file or shift key must be set.",
-                dest="key",
                 default=None,
                 required=False)
 
