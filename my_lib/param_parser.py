@@ -9,77 +9,70 @@ import argparse
 
 class ParseParams(object):
     # {{{
-    input_file = None
-    output_file = None
-    key = None
-    subparser = None
-    parser = None
+    args = None
 
     def __init__(self):
         # {{{
-        self.parser = argparse.ArgumentParser(
+        # Create top-level parser
+        parser = argparse.ArgumentParser(
                 prog="TAKR Project 2",
                 description='''
                 TAKR - Project 2
                 Script for encrypting/decrypting text file with Caesar cipher
                 ''')
 
-        self.parseParams(self.parser)
+        # Create subparsers
+        subparsers = parser.add_subparsers(
+                dest="subparser",
+                title="subcommands",
+                description="Test decrypt with key or encrypt/decrypt file",
+                help="additional help")
+
+        # Create parent parser
+        base_parser = argparse.ArgumentParser(add_help=False)
+
+        self.parseParams(parser, base_parser, subparsers)
         # }}}
 
-    def help_print(self):
-        # {{{
-        self.parser.print_help()
-        # }}}
-
-    def parseParams(self, parser):
+    def parseParams(self, parser, base_parser, subparsers):
         # {{{
         # {{{ Generic parser
-        parser.add_argument(
+        base_parser.add_argument(
                 "--version", action="version",
                 version="%(prog)s 0.5")
-        # }}}
 
-        # {{{ Parent parser for encryptionúdecryption
-        parent_parser = argparse.ArgumentParser(add_help=False)
-        parent_parser.add_argument(
+        base_parser.add_argument(
                 "-f", "--file",
                 help="input file. Default: file.input",
                 required=False,
                 default="file.input")
 
-        parent_parser.add_argument(
+        base_parser.add_argument(
                 "-o", "--output",
                 help="Output file. Default: file.output",
                 required=False,
                 default="file.output")
         # }}}
 
-        # {{{ Create subparsers
-        subparsers = parser.add_subparsers(
-                dest="subparser",
-                title="subcommands",
-                description="Test decrypt with key or encrypt/decrypt file",
-                help="additional help")
-        # }}}
-
         # {{{ Parser for encrypting
         parser_encryption = subparsers.add_parser(
-                "encrypt", parents=[parent_parser],
+                "encrypt", parents=[base_parser],
                 help="Encrypt file")
 
         key_shift_key = parser_encryption.add_mutually_exclusive_group(
                 required=True)
         key_shift_key.add_argument(
                 "-k", "--key",
-                help="Key file for encryption.",
+                help="Key file for encryption.\
+                One of key file or shift key must be set.",
                 default="shift.key",
                 required=False)
 
         key_shift_key.add_argument(
                 "-s", "--shift_key",
                 help="Shift key for encryption.\
-                If not set, shift key will be randomly generated.",
+                If not specified, shift key will be randomly generated.\
+                One of key file or shift key must be set.",
                 dest="key",
                 default=None,
                 required=False)
@@ -87,7 +80,7 @@ class ParseParams(object):
 
         # {{{ Parser for decrypting
         parser_decryption = subparsers.add_parser(
-                "decrypt", parents=[parent_parser],
+                "decrypt", parents=[base_parser],
                 help="Decrypt file")
 
         parser_decryption.add_argument(
@@ -99,37 +92,28 @@ class ParseParams(object):
 
         # {{{ Parser for decrypting with key, Test option
         parser_testing = subparsers.add_parser(
-                "test", parents=[parent_parser],
+                "test", parents=[base_parser],
                 help="Decrypt test with key")
 
         key_shift = parser_testing.add_mutually_exclusive_group(
                 required=True)
         key_shift.add_argument(
                 "-k", "--key",
-                help="Key file for encryption.",
+                help="Key file for encryption.\
+                One of key file or shift key must be set.",
                 default="shift.key",
                 required=False)
 
         key_shift.add_argument(
                 "-s", "--shift_key",
-                help="Shift key for encryption.",
+                help="Shift key for encryption.\
+                One of key file or shift key must be set.",
                 dest="key",
                 default=None,
                 required=False)
 
         # }}}
 
-        arguments = parser.parse_args()
-        parent_args = parent_parser.parse_args()
-
-        self.subparser = arguments.subparser
-
-        self.input_file = parent_args.file
-        self.output_file = parent_args.output
-
-        if self.subparser == "encrypt":
-            self.key_file = arguments.key
-        elif self.subparser == "decrypt":
-            self.key_file = arguments.key
+        self.args = parser.parse_args()
         # }}}
     # }}}

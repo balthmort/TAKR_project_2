@@ -2,6 +2,7 @@
 *.output
 *.key
 *.decrypt
+*.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
