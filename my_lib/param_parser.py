@@ -115,9 +115,10 @@ class ParseParams(object):
                 required=True)
         key_shift.add_argument(
                 "-k", "--key",
+                nargs="?",
                 help="Key file for encryption.\
                 One of key file or shift key must be set.",
-                default="shift.key",
+                const="shift.key",
                 dest="key_file",
                 required=False)
 
@@ -125,7 +126,6 @@ class ParseParams(object):
                 "-s", "--shift_key",
                 help="Shift key for encryption.\
                 One of key file or shift key must be set.",
-                default=None,
                 required=False)
 
         # }}}
