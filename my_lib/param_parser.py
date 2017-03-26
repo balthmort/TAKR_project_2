@@ -5,6 +5,7 @@
 # Project:  TAKR project 2
 
 import argparse
+import sys
 
 
 class ParseParams(object):
@@ -32,6 +33,18 @@ class ParseParams(object):
         base_parser = argparse.ArgumentParser(add_help=False)
 
         self.parseParams(parser, base_parser, subparsers)
+        # }}}
+
+    def show(self):
+        # {{{
+        if self.args.subparser is not None:
+            sys.stderr.write("Show params\n")
+            sys.stderr.write("Input file:\t" + self.args.file + "\n")
+            sys.stderr.write("Output file:\t" + self.args.output + "\n")
+            sys.stderr.write("Key file:\t" + str(self.args.key_file) + "\n")
+            if self.args.subparser != "decrypt":
+                sys.stderr.write("Shift key\t" +
+                                 str(self.args.shift_key) + "\n")
         # }}}
 
     def parseParams(self, parser, base_parser, subparsers):
@@ -63,18 +76,20 @@ class ParseParams(object):
                 required=True)
         key_shift_key.add_argument(
                 "-k", "--key",
+                nargs="?",
                 help="Key file for encryption.\
                 One of key file or shift key must be set.",
-                default="shift.key",
+                const="shift.key",
                 dest="key_file",
                 required=False)
 
         key_shift_key.add_argument(
                 "-s", "--shift_key",
+                nargs="?",
+                const="generate",
                 help="Shift key for encryption.\
-                If not specified, shift key will be randomly generated.\
+                If not set, will be randomly generated.\
                 One of key file or shift key must be set.",
-                default=None,
                 required=False)
         # }}}
 
