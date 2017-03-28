@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # author:   Petr Surý
-# Date:     23.3.2017
+# Date:     23.3.2017, 26.3.2017
 # File:     param_parser.py
 # Project:  TAKR project 2
 
@@ -39,8 +39,8 @@ class ParseParams(object):
         # {{{
         if self.args.subparser is not None:
             sys.stderr.write("Show params\n")
-            sys.stderr.write("Input file:\t" + self.args.file + "\n")
-            sys.stderr.write("Output file:\t" + self.args.output + "\n")
+            sys.stderr.write("Input file:\t" + self.args.input_file + "\n")
+            sys.stderr.write("Output file:\t" + self.args.output_file + "\n")
             sys.stderr.write("Key file:\t" + str(self.args.key_file) + "\n")
             if self.args.subparser != "decrypt":
                 sys.stderr.write("Shift key\t" +
@@ -55,13 +55,13 @@ class ParseParams(object):
                 version="%(prog)s 0.5")
 
         base_parser.add_argument(
-                "-f", "--file",
+                "-f", "--input_file",
                 help="input file. Default: file.input",
                 required=False,
                 default="file.input")
 
         base_parser.add_argument(
-                "-o", "--output",
+                "-o", "--output_file",
                 help="Output file. Default: file.output",
                 required=False,
                 default="file.output")
