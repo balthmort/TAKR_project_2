@@ -7,6 +7,7 @@
 import sys
 from my_lib import param_parser
 from my_lib import encrypt
+from my_lib import decrypt
 from my_lib import check_params
 
 if __name__ == "__main__":
@@ -24,6 +25,9 @@ if __name__ == "__main__":
                 checked_params.key)
     elif(param.args.subparser == "decrypt"):
         sys.stderr.write("Decrypt\n")
+        decrypt.DecryptCaesar(
+                checked_params.input_file,
+                checked_params.output_file)
     elif(param.args.subparser == "test"):
         sys.stderr.write("Decrypt test\n")
     else:

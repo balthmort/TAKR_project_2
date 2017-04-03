@@ -21,8 +21,13 @@ class CheckParams(object):
         if args.subparser is not None:
             self.input_file = self.check_input_file(args.input_file)
             self.output_file = self.check_output_file(args.output_file)
-            self.key = self.check_key(
+            if args.subparser == "decrypt":
+                self.key = self.check_key(
+                                args.key_file, None, args.subparser)
+            else:
+                self.key = self.check_key(
                                 args.key_file, args.shift_key, args.subparser)
+
         # }}}
 
     def check_input_file(self, file):
