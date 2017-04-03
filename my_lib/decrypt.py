@@ -56,7 +56,7 @@ class DecryptCaesar(object):
                  		freqTopismeno[pismenoToFreq[pismeno]] = [pismeno]
          		else:
                 		freqTopismeno[pismenoToFreq[pismeno]].append(pismeno)
-    				"""Změní klíče místo písmenek bude četnost (asi takto Četnost : pismeno), Přiřadí a dá k sobě ty písmena se stejnou četnosti
+    				"""Změní klíče místo písmenek bude četnost (asi takto Četnost : pismeno), Přiřadí a dá k sobě ty písmena se stejnou četnosti"""
 
          	for freq in freqTopismeno:
              		freqTopismeno[freq].sort(key=ETAOIN.find, reverse=True)
