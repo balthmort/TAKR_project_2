@@ -1,8 +1,4 @@
-*.input
-*.output
-*.key
-*.decrypt
-*.lock
+FILES/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
