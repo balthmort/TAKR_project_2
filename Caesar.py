@@ -10,6 +10,11 @@ from my_lib import encrypt
 from my_lib import decrypt
 from my_lib import check_params
 
+
+def zip_strings(string_1, string_2):
+    return "".join((["%s%s" % x for x in list(zip(string_1, string_2))]))
+
+
 if __name__ == "__main__":
     sys.stderr.write("Beginning execution\n")
     param = param_parser.ParseParams()
@@ -29,6 +34,20 @@ if __name__ == "__main__":
                 checked_params.input_file,
                 checked_params.output_file)
     elif(param.args.subparser == "test"):
-        sys.stderr.write("Decrypt test\n")
+        sys.stderr.write("Caesar enhancement test\n")
+        enc_string_1 = encrypt.EncryptCaesar(
+                checked_params.input_file,
+                checked_params.output_file,
+                checked_params.key,
+                save=False)
+
+        enc_string_2 = encrypt.EncryptCaesar(
+                checked_params.input_file,
+                checked_params.output_file,
+                -int(checked_params.key),
+                save=False)
+        final_encrypted_string = zip_strings(enc_string_1.encrypted_string,
+                                             enc_string_2.encrypted_string)
+        print(final_encrypted_string)
     else:
         sys.stderr.write("Print help\n")

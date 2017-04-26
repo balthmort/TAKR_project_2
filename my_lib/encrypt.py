@@ -11,8 +11,9 @@ from random import randint
 class EncryptCaesar(object):
     # {{{
     alphabet_lenght = 26
+    encrypted_string = None
 
-    def __init__(self, input_file, output_file, key):
+    def __init__(self, input_file, output_file, key, save=True):
         # {{{
         sys.stderr.write("Encrypt Caesar\n")
         if key == "generate":
@@ -20,7 +21,9 @@ class EncryptCaesar(object):
         else:
             key = int(key)
 
-        self.save_into_file(output_file, self.encrypt(input_file, key))
+        self.encrypted_string = str(self.encrypt(input_file, key))
+        if save:
+            self.save_into_file(output_file, self.encrypted_string)
         # }}}
 
     def encrypt(self, input_file, key):
